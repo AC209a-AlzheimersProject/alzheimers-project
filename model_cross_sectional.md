@@ -1,6 +1,6 @@
 ---
-title: Models
-notebook: model.ipynb
+title: Cross-Sectional Model
+notebook: model_cross_sectional.ipynb
 nav_include: 2
 ---
 
@@ -481,7 +481,7 @@ plt.scatter(dfnosouth.linoleic, dfnosouth.arachidic, c=dfnosouth.region, s=50);
 
 
 
-![png](model_files/model_8_0.png)
+![png](model_cross_sectional_files/model_cross_sectional_8_0.png)
 
 
 
@@ -526,7 +526,7 @@ plt.scatter(Xtest[:, 0], Xtest[:, 1], c=ytest, s=50, marker="s", cmap='spring', 
 
 
 
-![png](model_files/model_10_0.png)
+![png](model_cross_sectional_files/model_cross_sectional_10_0.png)
 
 
 
@@ -626,7 +626,7 @@ plot_svm_new(clsvc, Xtr, ytr, Xte, yte)
 
 
 
-![png](model_files/model_16_1.png)
+![png](model_cross_sectional_files/model_cross_sectional_16_1.png)
 
 
 The best fit allows for a bigger margin by allowing some inbetween penalization. If we use the standard C=1 in scikit-learn you see that we are allowing for less penalization.
