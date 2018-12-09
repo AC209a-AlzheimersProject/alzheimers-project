@@ -1,6 +1,7 @@
 ---
 title: EDA
 notebook: eda.ipynb
+nav_include: 1
 ---
 
 ## Contents
@@ -38,7 +39,7 @@ Publishers, London, pp. 189–214.
 
 
 ```python
-df = pd.read_csv("local-olives-cleaned.csv")
+df = pd.read_csv("cleaned.csv")
 df.head()
 ```
 
@@ -270,7 +271,7 @@ pd.value_counts(df.areastring, sort=False).plot(kind="bar");
 
 
 
-![png](olives-eda_files/olives-eda_8_0.png)
+![png](eda_files/eda_8_0.png)
 
 
 
@@ -281,7 +282,7 @@ pd.value_counts(df.regionstring, sort=False).plot(kind="barh");
 
 
 
-![png](olives-eda_files/olives-eda_9_0.png)
+![png](eda_files/eda_9_0.png)
 
 
 
@@ -293,7 +294,7 @@ df[acidlist].median().plot(kind="bar");
 
 
 
-![png](olives-eda_files/olives-eda_10_0.png)
+![png](eda_files/eda_10_0.png)
 
 
 Or one can use `aggregate` to pass an arbitrary function of to the sub-dataframe. The function is applied columnwise.
@@ -408,7 +409,7 @@ with sns.axes_style("white", {'grid':False}):
 
 
 
-![png](olives-eda_files/olives-eda_13_0.png)
+![png](eda_files/eda_13_0.png)
 
 
 ## Figuring the dataset by Region
@@ -422,7 +423,7 @@ g.map(plt.scatter,"eicosenoic", "linoleic");
 
 
 
-![png](olives-eda_files/olives-eda_15_0.png)
+![png](eda_files/eda_15_0.png)
 
 
 Clearly, region 1 or the South can visually be separated out by `eicosenoic` fraction itself.
@@ -437,7 +438,7 @@ with sns.axes_style("white"):
 
 
 
-![png](olives-eda_files/olives-eda_17_0.png)
+![png](eda_files/eda_17_0.png)
 
 
 We make a SPLOM using `seaborn` to see in what space the regions may be separated. Note that linoleic and oleic seem promising. And perhaps arachidic paired with eicosenoic.
@@ -450,7 +451,7 @@ sns.pairplot(df, vars=acidlist, hue="regionstring", size=2.5, diag_kind='kde');
 
 
 
-![png](olives-eda_files/olives-eda_19_0.png)
+![png](eda_files/eda_19_0.png)
 
 
 Pandas supports conditional indexing: <a href="http://pandas.pydata.org/pandas-docs/dev/indexing.html#boolean-indexing">documentation</a>. Lets use it to follow up on the clear pattern of Southern oils seeeming to be separable by just the `eicosenoic` feature.
@@ -470,7 +471,7 @@ with sns.axes_style("white"):
 
 
 
-![png](olives-eda_files/olives-eda_22_0.png)
+![png](eda_files/eda_22_0.png)
 
 
 ## Figuring the South of Italy by Area
@@ -610,7 +611,7 @@ sns.pairplot(dfsouth, hue="areastring", size=2.5, vars=acidlist, diag_kind='kde'
 
 
 
-![png](olives-eda_files/olives-eda_26_0.png)
+![png](eda_files/eda_26_0.png)
 
 
 
@@ -621,7 +622,7 @@ sns.pairplot(dfsouth[dfsouth.areastring!="Sicily"], hue="areastring", size=2.5, 
 
 
 
-![png](olives-eda_files/olives-eda_27_0.png)
+![png](eda_files/eda_27_0.png)
 
 
 Seems that combinations of oleic, palmitic, palmitoleic might be useful?

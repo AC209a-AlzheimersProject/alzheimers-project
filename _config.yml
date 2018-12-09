@@ -1,6 +1,6 @@
 theme: jekyll-theme-primer
-title: Support Vector Olives
-description: Keeping Italian Olives Pure!
+title: Introduction
+description: Alzheimer's Project Introduction
 baseurl:
 markdown: kramdown
 kramdown:

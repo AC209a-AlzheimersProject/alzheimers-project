@@ -1,5 +1,6 @@
 ---
-title: The Case of the Italian Olives
+title: Alzheimer's Project
+subtitle: Team 41: Nathan Einstein, Rory Maizels, Robbert Struyven, Abhimanyu Vasishth
 ---
 
 This is the home page
