@@ -1,5 +1,5 @@
 ---
-title: Cross-Sectional Model
+title: Model Cross Sectional
 notebook: model_cross_sectional.ipynb
 nav_include: 2
 ---
@@ -27,6 +27,7 @@ pd.set_option('display.max_columns', 100)
 
 
 ```python
+df = pd.read_csv("uncleaned.csv")
 df = pd.read_csv("cleaned.csv")
 df.head()
 ```
