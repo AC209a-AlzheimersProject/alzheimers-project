@@ -1,16 +1,27 @@
 ---
 title: Alzheimer's Project
-subtitle: Team 41: Nathan Einstein, Rory Maizels, Robbert Struyven, Abhimanyu Vasishth
 ---
 
-This is the home page
+# Alzheimer's Project
+### Team 41: Nathan Einstein, Rory Maizels, Robbert Struyven, Abhimanyu Vasishth
+AC209a Fall 2018
 
-## Lets have fun
+## Problem Description
 
->here is a quote
+Here is the problem description
 
-Here is *emph* and **bold**.
+## Motivation
 
-Here is some inline math $\alpha = \frac{\beta}{\gamma}$ and, of-course, E rules:
+Here is the motivation
 
-$$ G_{\mu\nu} + \Lambda g_{\mu\nu}  = 8 \pi T_{\mu\nu} . $$
+## Data Source Description
+
+Here is some information about ADNI
+
+## Research Questions
+
+Here are our research questions
+
+## Related Work
+
+Here is our related work

@@ -1,6 +1,6 @@
 theme: jekyll-theme-primer
-title: Introduction
-description: Alzheimer's Project Introduction
+title: Alzheimer's Project
+description: Alzheimer's Project for AC 209a
 baseurl:
 markdown: kramdown
 kramdown:
