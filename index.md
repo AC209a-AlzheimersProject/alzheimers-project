@@ -1,5 +1,5 @@
 ---
-title: Alzheimer's Project
+title: Introduction
 ---
 
 ### Team 41: Nathan Einstein, Rory Maizels, Robbert Struyven, Abhimanyu Vasishth
