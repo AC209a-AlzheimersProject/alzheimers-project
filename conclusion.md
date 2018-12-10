@@ -3,8 +3,6 @@ title: Conclusion
 nav_include: 4
 ---
 
-# Conclusion and Future Work
-
 ## Summary and Significance of Findings
 
 Here are our findings
