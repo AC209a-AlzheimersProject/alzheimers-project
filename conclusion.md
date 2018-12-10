@@ -1,6 +1,6 @@
 ---
 title: Conclusion
-nav_include: 2
+nav_include: 4
 ---
 
 # Conclusion and Future Work
