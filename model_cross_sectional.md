@@ -1,5 +1,5 @@
 ---
-title: Model Cross Sectional
+title: Cross-Sectional Model
 notebook: model_cross_sectional.ipynb
 nav_include: 2
 ---
