@@ -1,5 +1,6 @@
 ---
 title: Introduction
+nav_include: 0
 ---
 
 ### Team 41: Nathan Einstein, Rory Maizels, Robbert Struyven, Abhimanyu Vasishth
