@@ -1,5 +1,5 @@
 ---
-title: EDA
+title: Exploratory Data Analysis
 notebook: eda.ipynb
 nav_include: 1
 ---
@@ -14,259 +14,168 @@ nav_include: 1
 
 ```python
 %matplotlib inline
-import numpy as np
-import matplotlib.pyplot as plt
+
 import pandas as pd
-import seaborn as sns
 pd.set_option('display.width', 500)
 pd.set_option('display.max_columns', 100)
-```
 
+import numpy as np
+import math
 
-## Italian Olives
+import matplotlib
+import matplotlib.pyplot as plt
+import seaborn as sns
+sns.set()
+from plotly.offline import download_plotlyjs, plot, iplot, init_notebook_mode
+init_notebook_mode(connected=True)
 
-![](Italy.png)
+from sklearn.neighbors import KNeighborsRegressor
+from sklearn.model_selection import train_test_split
+import itertools
 
-I found this data set in the RGGobi book (http://www.ggobi.org/book/), from which the above diagram is taken. It has "the percentage composition of fatty acids
-found in the lipid fraction of Italian olive oils', with oils from 3 regions of Italy: the North, the South, and Sardinia. The regions themselves are subdivided into areas as shown in the map above. The source for this data is:
-
->Forina, M., Armanino, C., Lanteri, S. & Tiscornia, E. (1983), Classification of Olive Oils from their Fatty Acid Composition, in Martens, H. and
-Russwurm Jr., H., eds, Food Research and Data Analysis, Applied Science
-Publishers, London, pp. 189–214.
-
-## Exploratory Viz
-
-
-
-```python
-df = pd.read_csv("cleaned.csv")
-df.head()
+import warnings
+warnings.filterwarnings('ignore')
 ```
 
 
 
+<script>requirejs.config({paths: { 'plotly': ['https://cdn.plot.ly/plotly-latest.min']},});if(!window.Plotly) {{require(['plotly'],function(plotly) {window.Plotly=plotly;});}}</script>
 
-
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>areastring</th>
-      <th>region</th>
-      <th>area</th>
-      <th>palmitic</th>
-      <th>palmitoleic</th>
-      <th>stearic</th>
-      <th>oleic</th>
-      <th>linoleic</th>
-      <th>linolenic</th>
-      <th>arachidic</th>
-      <th>eicosenoic</th>
-      <th>regionstring</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>North-Apulia</td>
-      <td>1</td>
-      <td>1</td>
-      <td>10.75</td>
-      <td>0.75</td>
-      <td>2.26</td>
-      <td>78.23</td>
-      <td>6.72</td>
-      <td>0.36</td>
-      <td>0.60</td>
-      <td>0.29</td>
-      <td>South</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>North-Apulia</td>
-      <td>1</td>
-      <td>1</td>
-      <td>10.88</td>
-      <td>0.73</td>
-      <td>2.24</td>
-      <td>77.09</td>
-      <td>7.81</td>
-      <td>0.31</td>
-      <td>0.61</td>
-      <td>0.29</td>
-      <td>South</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>North-Apulia</td>
-      <td>1</td>
-      <td>1</td>
-      <td>9.11</td>
-      <td>0.54</td>
-      <td>2.46</td>
-      <td>81.13</td>
-      <td>5.49</td>
-      <td>0.31</td>
-      <td>0.63</td>
-      <td>0.29</td>
-      <td>South</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>North-Apulia</td>
-      <td>1</td>
-      <td>1</td>
-      <td>9.66</td>
-      <td>0.57</td>
-      <td>2.40</td>
-      <td>79.52</td>
-      <td>6.19</td>
-      <td>0.50</td>
-      <td>0.78</td>
-      <td>0.35</td>
-      <td>South</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>North-Apulia</td>
-      <td>1</td>
-      <td>1</td>
-      <td>10.51</td>
-      <td>0.67</td>
-      <td>2.59</td>
-      <td>77.71</td>
-      <td>6.72</td>
-      <td>0.50</td>
-      <td>0.80</td>
-      <td>0.46</td>
-      <td>South</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-### exploring globally
 
 
 
 ```python
-pd.crosstab(df.areastring, df.regionstring)
+adni_df = pd.read_csv('../../data/Merge/ADNIMERGE.csv')
+adni_df.columns.values
 ```
 
 
 
 
 
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th>regionstring</th>
-      <th>North</th>
-      <th>Sardinia</th>
-      <th>South</th>
-    </tr>
-    <tr>
-      <th>areastring</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>Calabria</th>
-      <td>0</td>
-      <td>0</td>
-      <td>56</td>
-    </tr>
-    <tr>
-      <th>Coast-Sardinia</th>
-      <td>0</td>
-      <td>33</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>East-Liguria</th>
-      <td>50</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>Inland-Sardinia</th>
-      <td>0</td>
-      <td>65</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>North-Apulia</th>
-      <td>0</td>
-      <td>0</td>
-      <td>25</td>
-    </tr>
-    <tr>
-      <th>Sicily</th>
-      <td>0</td>
-      <td>0</td>
-      <td>36</td>
-    </tr>
-    <tr>
-      <th>South-Apulia</th>
-      <td>0</td>
-      <td>0</td>
-      <td>206</td>
-    </tr>
-    <tr>
-      <th>Umbria</th>
-      <td>51</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-    <tr>
-      <th>West-Liguria</th>
-      <td>50</td>
-      <td>0</td>
-      <td>0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+    array(['RID', 'PTID', 'VISCODE', 'SITE', 'COLPROT', 'ORIGPROT',
+           'EXAMDATE', 'DX_bl', 'AGE', 'PTGENDER', 'PTEDUCAT', 'PTETHCAT',
+           'PTRACCAT', 'PTMARRY', 'APOE4', 'FDG', 'PIB', 'AV45', 'ABETA',
+           'TAU', 'PTAU', 'CDRSB', 'ADAS11', 'ADAS13', 'ADASQ4', 'MMSE',
+           'RAVLT_immediate', 'RAVLT_learning', 'RAVLT_forgetting',
+           'RAVLT_perc_forgetting', 'LDELTOTAL', 'DIGITSCOR', 'TRABSCOR',
+           'FAQ', 'MOCA', 'EcogPtMem', 'EcogPtLang', 'EcogPtVisspat',
+           'EcogPtPlan', 'EcogPtOrgan', 'EcogPtDivatt', 'EcogPtTotal',
+           'EcogSPMem', 'EcogSPLang', 'EcogSPVisspat', 'EcogSPPlan',
+           'EcogSPOrgan', 'EcogSPDivatt', 'EcogSPTotal', 'FLDSTRENG',
+           'FSVERSION', 'IMAGEUID', 'Ventricles', 'Hippocampus', 'WholeBrain',
+           'Entorhinal', 'Fusiform', 'MidTemp', 'ICV', 'DX', 'mPACCdigit',
+           'mPACCtrailsB', 'EXAMDATE_bl', 'CDRSB_bl', 'ADAS11_bl',
+           'ADAS13_bl', 'ADASQ4_bl', 'MMSE_bl', 'RAVLT_immediate_bl',
+           'RAVLT_learning_bl', 'RAVLT_forgetting_bl',
+           'RAVLT_perc_forgetting_bl', 'LDELTOTAL_BL', 'DIGITSCOR_bl',
+           'TRABSCOR_bl', 'FAQ_bl', 'mPACCdigit_bl', 'mPACCtrailsB_bl',
+           'FLDSTRENG_bl', 'FSVERSION_bl', 'Ventricles_bl', 'Hippocampus_bl',
+           'WholeBrain_bl', 'Entorhinal_bl', 'Fusiform_bl', 'MidTemp_bl',
+           'ICV_bl', 'MOCA_bl', 'EcogPtMem_bl', 'EcogPtLang_bl',
+           'EcogPtVisspat_bl', 'EcogPtPlan_bl', 'EcogPtOrgan_bl',
+           'EcogPtDivatt_bl', 'EcogPtTotal_bl', 'EcogSPMem_bl',
+           'EcogSPLang_bl', 'EcogSPVisspat_bl', 'EcogSPPlan_bl',
+           'EcogSPOrgan_bl', 'EcogSPDivatt_bl', 'EcogSPTotal_bl', 'ABETA_bl',
+           'TAU_bl', 'PTAU_bl', 'FDG_bl', 'PIB_bl', 'AV45_bl', 'Years_bl',
+           'Month_bl', 'Month', 'M', 'update_stamp'], dtype=object)
 
 
+
+## Demographic Information
+
+The patient demographics helped shape some of our goals and research questions. First, we noticed that all participants were at or above the age of 55. This means that our ability to make an "early" diagnosis is limited, since many of the participants got a screening done since they exhibited symptoms of cognitive impairment of some form. Second, we notice that a majority of our population is white and married. We understand that this means that our findings do not extend to a larger population.
 
 
 
 ```python
-pd.value_counts(df.areastring, sort=False).plot(kind="bar");
+fig, ax = plt.subplots(nrows=1, ncols=5, figsize=(25,6))
+axes = ax.ravel()
+fields = ['AGE', 'PTEDUCAT', 'PTGENDER', 'PTETHCAT', 'PTMARRY']
+
+visits = adni_df['AGE'].dropna(axis=0)
+axes[0].hist(visits, bins=10, alpha=0.7)
+ax[0].set_title('Age',fontsize=25)
+ax[0].set_ylabel('Frequency',fontsize=20)
+for tick in ax[0].xaxis.get_major_ticks():
+    tick.label.set_fontsize(20)
+
+visits = adni_df['PTEDUCAT'].dropna(axis=0)
+axes[1].hist(visits, bins=10, alpha=0.7)
+ax[1].set_title('Education (years)',fontsize=25)
+for tick in ax[1].xaxis.get_major_ticks():
+    tick.label.set_fontsize(20)
+
+visits = adni_df['PTGENDER'].dropna(axis=0)
+names = [val[0] for val in visits.value_counts().index.values]
+heights = visits.value_counts().values
+ax[2].bar(names, heights, alpha=0.7)
+ax[2].set_title('Gender',fontsize=25)
+for tick in ax[2].xaxis.get_major_ticks():
+    tick.label.set_fontsize(20)
+
+visits = adni_df['PTRACCAT'].dropna(axis=0)
+names = visits.value_counts().index.values[0:3]
+heights = visits.value_counts().values[0:3]
+ax[3].bar(names, heights, alpha=0.7)
+ax[3].set_title('Race',fontsize=25)
+for tick in ax[3].xaxis.get_major_ticks():
+    tick.label.set_fontsize(20)
+
+visits = adni_df['PTMARRY'].dropna(axis=0)
+names = ['Married', 'Widowed', 'Divorced', 'Unmarried']
+heights = visits.value_counts().values[0:4]
+ax[4].bar(names, heights, alpha=0.7)
+ax[4].set_title('Marital Status',fontsize=25)
+for tick in ax[4].xaxis.get_major_ticks():
+    tick.label.set_fontsize(13)
+```
+
+
+
+![png](eda_files/eda_5_0.png)
+
+
+## Initial Diagnoses
+
+The baseline diagnoses are encoded in two ways in the ADNI Merge Dataset. The first encoding is as follows:
+
+1. CN: Cognitively Normal
+2. MCI: Mild Cognitive Impairment
+3. Dementia: Alzheimer's Disease or other Dementia.
+
+The second encoding is as follows:
+
+1. CN: Cognitively Normal
+2. EMCI: Early Mild Cognitive Impairment
+3. LMCI: Late Mild Cognitive Impairment
+4. SMC: Significant Memory Concerns
+5. AD: Alzheimer's Disease
+
+We choose the first encoding, changing 'Dementia' to 'AD' since there is an equivalency in the encoding of these categories. The second encoding is present only in the baseline diagnoses and not in the subsequent diagnoses, and part of our modeling is to predict future decline, so we choose the first encoding to remain consistent between diagnoses at different points of time.
+
+
+
+```python
+fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(20,6))
+axes = ax.ravel()
+sub_df = adni_df[adni_df['M'] == 0]
+
+dxs = sub_df['DX'].map({'Dementia': 'AD', 'CN': 'CN', 'MCI': 'MCI'})
+names =  dxs.value_counts().index.values
+heights = dxs.value_counts().values
+axes[0].bar(names, heights, alpha=0.7)
+axes[0].set_title('Baseline Diagnoses', fontsize=25)
+for tick in ax[0].xaxis.get_major_ticks():
+    tick.label.set_fontsize(20)
+
+dxs = sub_df['DX_bl']
+names =  dxs.value_counts().index.values
+heights = dxs.value_counts().values
+axes[1].bar(names, heights, alpha=0.7)
+axes[1].set_title('Baseline Diagnoses (2nd encoding)', fontsize=25)
+for tick in ax[1].xaxis.get_major_ticks():
+    tick.label.set_fontsize(20)
 ```
 
 
@@ -274,213 +183,208 @@ pd.value_counts(df.areastring, sort=False).plot(kind="bar");
 ![png](eda_files/eda_8_0.png)
 
 
+### Important Predictors for Initial Diagnosis
+
+From a histogram of baseline values for all predictors in our dataset conditional on initial diagnosis, a few predictors stood out to us, as being promising indicators of baseline diagnosis. These pertained to examination scores, which doctors heavily rely on to make their initial diagnoses. This influenced our decision to explore one such heavily influential examination, the MMSE (Mini-Mental State Examination) in particular.
+
 
 
 ```python
-pd.value_counts(df.regionstring, sort=False).plot(kind="barh");
+color_dict = {'CN': 'red', 'AD': 'blue', 'Dementia': 'blue', 'LMCI': 'green', 'MCI': 'green', 'EMCI': 'orange',
+             'SMC': 'purple'}
+name_dict = {'CN': 'CN', 'Dementia': 'AD', 'MCI': 'MCI'}
+baseline_df = adni_df[adni_df['M'] == 0]
+variables = ['MMSE', 'CDRSB', 'RAVLT_immediate', 'mPACCdigit']
+row = math.ceil(len(variables)/4)
+col = min(4,len(variables))
+fig, ax = plt.subplots(figsize=(5*col,5*row), nrows=row, ncols=col)
+axes = ax.ravel()
+for i, var in enumerate(variables):
+    if i == 0:
+        axes[i].set_ylabel('Frequency', fontsize=20)
+    time = 'M'
+    diag = 'DX'
+    df_copy = baseline_df[[time,diag,var]].copy().dropna(axis=0)
+    dxs = df_copy[diag].unique()
+    for c, dx in enumerate(dxs):
+        df_inb = df_copy[df_copy[diag] == dx]
+        color = color_dict[dx]
+        axes[i].hist(df_inb[var], color=color, label=name_dict[dx], alpha=(0.7-0.1*c))
+    axes[i].set_title(var, fontsize=25)
+    axes[i].legend(fontsize=15)
+fig.tight_layout()
 ```
 
 
 
-![png](eda_files/eda_9_0.png)
+![png](eda_files/eda_11_0.png)
 
 
 
 
 ```python
-acidlist=['palmitic', 'palmitoleic', 'stearic', 'oleic', 'linoleic', 'linolenic', 'arachidic', 'eicosenoic']
-df[acidlist].median().plot(kind="bar");
-```
-
-
-
-![png](eda_files/eda_10_0.png)
-
-
-Or one can use `aggregate` to pass an arbitrary function of to the sub-dataframe. The function is applied columnwise.
-
-
-
-```python
-dfbymean=df.groupby("regionstring").aggregate(np.mean)
-dfbymean.head()
+cols = ['DX']
+baseline_df = adni_df[adni_df['M'] == 0]
+baseline_df['DX_map'] = baseline_df['DX'].map(name_dict)
+for col in baseline_df.columns.values:
+    if '_bl' in col:
+        cols.append(col)
+cols = ['CDRSB_bl', 'MMSE_bl', 'ADASQ4_bl', 'ADAS11_bl', 'ADAS13_bl', 'RAVLT_immediate_bl', 'mPACCdigit_bl']
+sns.pairplot(baseline_df, vars=cols, hue="DX_map", height=2.5, diag_kind='kde',
+             palette={'CN': 'red', 'MCI': 'green', 'AD': 'blue'})
 ```
 
 
 
 
 
-<div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>region</th>
-      <th>area</th>
-      <th>palmitic</th>
-      <th>palmitoleic</th>
-      <th>stearic</th>
-      <th>oleic</th>
-      <th>linoleic</th>
-      <th>linolenic</th>
-      <th>arachidic</th>
-      <th>eicosenoic</th>
-    </tr>
-    <tr>
-      <th>regionstring</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>North</th>
-      <td>3.0</td>
-      <td>8.006623</td>
-      <td>10.948013</td>
-      <td>0.837351</td>
-      <td>2.308013</td>
-      <td>77.930530</td>
-      <td>7.270331</td>
-      <td>0.217881</td>
-      <td>0.375762</td>
-      <td>0.019735</td>
-    </tr>
-    <tr>
-      <th>Sardinia</th>
-      <td>2.0</td>
-      <td>5.336735</td>
-      <td>11.113469</td>
-      <td>0.967449</td>
-      <td>2.261837</td>
-      <td>72.680204</td>
-      <td>11.965306</td>
-      <td>0.270918</td>
-      <td>0.731735</td>
-      <td>0.019388</td>
-    </tr>
-    <tr>
-      <th>South</th>
-      <td>1.0</td>
-      <td>2.783282</td>
-      <td>13.322879</td>
-      <td>1.548019</td>
-      <td>2.287740</td>
-      <td>71.000093</td>
-      <td>10.334985</td>
-      <td>0.380650</td>
-      <td>0.631176</td>
-      <td>0.273220</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+    <seaborn.axisgrid.PairGrid at 0x1a2949f8d0>
 
 
+
+
+![png](eda_files/eda_12_1.png)
+
+
+## Diagnoses Over Time
 
 
 
 ```python
-with sns.axes_style("white", {'grid':False}):
-    dfbymean[acidlist].plot(kind='barh', stacked=True);
-    sns.despine()
+
+```
+
+
+### MMSE scores over time
+
+
+
+```python
+traj_df = adni_df[['RID', 'M', 'MMSE', 'DX_bl', 'DX']].dropna(axis=0)
+traj_df = traj_df.groupby('RID').aggregate({'M': lambda x: list(x), 'MMSE': lambda x: list(x), 'DX_bl': 'max',
+                                           'DX': 'max'})
+diags = traj_df['DX'].unique()
+
+fig, ax = plt.subplots(ncols=len(diags), nrows=1, figsize=(20,5))
+axes = ax.ravel()
+
+for i,dx in enumerate(diags):
+    if i == 0:
+        axes[i].set_ylabel('MMSE levels', fontsize=20)
+    for diag, vals, mths in traj_df[traj_df['DX'] == dx][['DX', 'MMSE', 'M']].values:
+        sort_mths = [mth for mth,val in sorted(zip(mths,vals))]
+        sort_vals = [val for mth,val in sorted(zip(mths,vals))]
+        axes[i].plot(sort_mths, sort_vals, 'o-', alpha=0.4, color=color_dict[dx])
+    axes[i].set_title(name_dict[dx], fontsize=25)
+    axes[i].set_xlabel('Months after baseline', fontsize=20)
+    axes[i].set_ylim((0,31))
+for tick in axes[i].xaxis.get_major_ticks():
+    tick.label.set_fontsize(20)
+fig.tight_layout()
 ```
 
 
 
-![png](eda_files/eda_13_0.png)
+![png](eda_files/eda_16_0.png)
 
 
-## Figuring the dataset by Region
+### Change in Diagnosis Between First Visit and Latest Visit
 
 
 
 ```python
-g=sns.FacetGrid(df, col="region")
-g.map(plt.scatter,"eicosenoic", "linoleic");
+df = adni_df.copy()
+indexes_last_visit=[]
+for patient_ids in df.PTID.unique():
+    latest_visit_M=df[df.PTID==patient_ids]['M'].max()
+    d=df[ df.PTID==patient_ids ]['M']== latest_visit_M
+    ind=d.index[-1]
+    indexes_last_visit.append(ind);
+
+df_last=df.loc[indexes_last_visit]
+
+df_dx = adni_df[adni_df['M'] == 0]
+df_dx['DX0'] = df_dx['DX']
+df_last_imp = df_last[['RID','DX']]
+df_dx = df_dx[['RID', 'DX']]
+df_dx = df_dx.merge(df_last_imp, how='left', on='RID')
+df_dx = df_dx.dropna(axis=0)
+print(df_dx.shape)
+```
+
+
+    (1648, 3)
+
+
+
+
+```python
+df_dx['DX_x'] = df_dx['DX_x'].map(name_dict)
+df_dx['DX_y'] = df_dx['DX_y'].map(name_dict)
+df_dx['DX_x'].value_counts()
+df_dx['DX_y'].value_counts()
+df_dx['transition'] = df_dx['DX_x'] + ',' + df_dx['DX_y']
 ```
 
 
 
-![png](eda_files/eda_15_0.png)
-
-
-Clearly, region 1 or the South can visually be separated out by `eicosenoic` fraction itself.
-
-
 
 ```python
-with sns.axes_style("white"):
-    g=sns.FacetGrid(df, col="region")
-    g.map(sns.distplot, "eicosenoic")
+fig, ax = plt.subplots(nrows=1, ncols=2, figsize=(20,6))
+axes = ax.ravel()
+sub_df = df_dx
+
+dxs = sub_df['DX_x']
+names =  dxs.value_counts().index.values
+heights = dxs.value_counts().values
+axes[0].bar(names, heights, alpha=0.7)
+axes[0].set_title('Initial Diagnoses', fontsize=25)
+axes[0].set_ylim(0,800)
+for tick in ax[0].xaxis.get_major_ticks():
+    tick.label.set_fontsize(20)
+
+dxs = sub_df['DX_y']
+names =  dxs.value_counts().index.values
+heights = dxs.value_counts().values
+axes[1].bar(names, heights, alpha=0.7)
+axes[1].set_title('Latest Diagnoses', fontsize=25)
+axes[1].set_ylim(0,800)
+for tick in ax[1].xaxis.get_major_ticks():
+    tick.label.set_fontsize(20)
 ```
 
 
 
-![png](eda_files/eda_17_0.png)
+![png](eda_files/eda_20_0.png)
 
-
-We make a SPLOM using `seaborn` to see in what space the regions may be separated. Note that linoleic and oleic seem promising. And perhaps arachidic paired with eicosenoic.
 
 
 
 ```python
-sns.pairplot(df, vars=acidlist, hue="regionstring", size=2.5, diag_kind='kde');
+outcomes = df_dx['transition'].value_counts()
+outcomes = outcomes.to_dict()
 ```
 
 
 
-![png](eda_files/eda_19_0.png)
-
-
-Pandas supports conditional indexing: <a href="http://pandas.pydata.org/pandas-docs/dev/indexing.html#boolean-indexing">documentation</a>. Lets use it to follow up on the clear pattern of Southern oils seeeming to be separable by just the `eicosenoic` feature.
-
-**Indeed this is the case!** Can also be seen using parallel co-ordinates:
-
-
 
 ```python
-from pandas.tools.plotting import parallel_coordinates
-dfna=df[acidlist]
-#normalizing by range
-dfna_norm = (dfna - dfna.mean()) / (dfna.max() - dfna.min())
-with sns.axes_style("white"):
-    parallel_coordinates(df[['regionstring']].join(dfna_norm), 'regionstring', alpha=0.3)
-```
 
-
-
-![png](eda_files/eda_22_0.png)
-
-
-## Figuring the South of Italy by Area
-
-
-
-```python
-dfsouth=df[df.regionstring=='South']
-dfsouth.head()
+k1_dict = {'CN': 0, 'MCI': 1, 'AD': 2}
+k2_dict = {'CN': 3, 'MCI': 4, 'AD': 5}
+tuples = []
+tables = np.zeros(shape=(3,3))
+for k in outcomes:
+    v = outcomes[k]
+    k1, k2 = k.split(',')
+    tuples.append(tuple([k1_dict[k1], k2_dict[k2], v]))
+    tables[k1_dict[k1]][k1_dict[k2]] = v
+table_changes = pd.DataFrame(tables, columns=['End CN', 'End MCI', 'End AD'])
+table_changes['DX'] = ['Start CN', 'Start MCI', 'Start AD']
+columns = table_changes.columns.tolist()
+columns = columns[-1:] + columns[:-1]
+table_changes = table_changes[columns]
+table_changes
 ```
 
 
@@ -488,112 +392,50 @@ dfsouth.head()
 
 
 <div>
-<style>
-    .dataframe thead tr:only-child th {
-        text-align: right;
-    }
-
-    .dataframe thead th {
-        text-align: left;
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
     }
 
     .dataframe tbody tr th {
         vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
     }
 </style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>areastring</th>
-      <th>region</th>
-      <th>area</th>
-      <th>palmitic</th>
-      <th>palmitoleic</th>
-      <th>stearic</th>
-      <th>oleic</th>
-      <th>linoleic</th>
-      <th>linolenic</th>
-      <th>arachidic</th>
-      <th>eicosenoic</th>
-      <th>regionstring</th>
+      <th>DX</th>
+      <th>End CN</th>
+      <th>End MCI</th>
+      <th>End AD</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>North-Apulia</td>
-      <td>1</td>
-      <td>1</td>
-      <td>10.75</td>
-      <td>0.75</td>
-      <td>2.26</td>
-      <td>78.23</td>
-      <td>6.72</td>
-      <td>0.36</td>
-      <td>0.60</td>
-      <td>0.29</td>
-      <td>South</td>
+      <td>Start CN</td>
+      <td>555.0</td>
+      <td>48.0</td>
+      <td>12.0</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>North-Apulia</td>
-      <td>1</td>
-      <td>1</td>
-      <td>10.88</td>
-      <td>0.73</td>
-      <td>2.24</td>
-      <td>77.09</td>
-      <td>7.81</td>
-      <td>0.31</td>
-      <td>0.61</td>
-      <td>0.29</td>
-      <td>South</td>
+      <td>Start MCI</td>
+      <td>39.0</td>
+      <td>578.0</td>
+      <td>156.0</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>North-Apulia</td>
-      <td>1</td>
-      <td>1</td>
-      <td>9.11</td>
-      <td>0.54</td>
-      <td>2.46</td>
-      <td>81.13</td>
-      <td>5.49</td>
-      <td>0.31</td>
-      <td>0.63</td>
-      <td>0.29</td>
-      <td>South</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>North-Apulia</td>
-      <td>1</td>
-      <td>1</td>
-      <td>9.66</td>
-      <td>0.57</td>
-      <td>2.40</td>
-      <td>79.52</td>
-      <td>6.19</td>
-      <td>0.50</td>
-      <td>0.78</td>
-      <td>0.35</td>
-      <td>South</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>North-Apulia</td>
-      <td>1</td>
-      <td>1</td>
-      <td>10.51</td>
-      <td>0.67</td>
-      <td>2.59</td>
-      <td>77.71</td>
-      <td>6.72</td>
-      <td>0.50</td>
-      <td>0.80</td>
-      <td>0.46</td>
-      <td>South</td>
+      <td>Start AD</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>259.0</td>
     </tr>
   </tbody>
 </table>
@@ -601,28 +443,43 @@ dfsouth.head()
 
 
 
-We make a couple of SPLOM's, one with sicily and one without sicily, to see whats separable. Sicily seems to be a problem. As before, see the KDE's first to see if separability exists and then let the eye look for patterns.
+
+
+```python
+data = dict(
+    type='sankey',
+    node = dict(
+      pad = 55,
+      thickness = 10,
+      line = dict(
+        color = "black",
+        width = 0.5
+      ),
+      label = ["CN", "MCI", "AD"]*3,
+      color = ["red", "green", "blue"]*3
+    ),
+    link = dict(
+      source = list(list(zip(*tuples))[0]),
+      target = list(list(zip(*tuples))[1]),
+      value = list(list(zip(*tuples))[2])
+  ))
+
+layout =  dict(
+    title = "Change in diagnoses",
+    font = dict(
+      size = 20
+    )
+)
+
+fig = dict(data=[data], layout=layout)
+iplot(fig, validate=False)
+```
+
+
+## Deep Dive into MMSE
 
 
 
 ```python
-sns.pairplot(dfsouth, hue="areastring", size=2.5, vars=acidlist, diag_kind='kde');
+
 ```
-
-
-
-![png](eda_files/eda_26_0.png)
-
-
-
-
-```python
-sns.pairplot(dfsouth[dfsouth.areastring!="Sicily"], hue="areastring", size=2.5, vars=acidlist, diag_kind='kde');
-```
-
-
-
-![png](eda_files/eda_27_0.png)
-
-
-Seems that combinations of oleic, palmitic, palmitoleic might be useful?
