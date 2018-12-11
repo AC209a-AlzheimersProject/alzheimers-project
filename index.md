@@ -19,8 +19,8 @@ Here is some information about ADNI
 
 ## Research Questions
 
-Here are our research questions
+Here are our research questions.
 
 ## Related Work
 
-Here is our related work. 
+Here is our related work.
