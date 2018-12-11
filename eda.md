@@ -1,7 +1,7 @@
 ---
 title: EDA
 notebook: eda.ipynb
-nav_include: 1
+nav_include: 2
 ---
 
 ## Contents
@@ -229,6 +229,17 @@ sns.pairplot(baseline_df, vars=cols, hue="DX_map", height=2.5, diag_kind='kde',
 ```
 
 
+
+
+
+    <seaborn.axisgrid.PairGrid at 0x105877eb8>
+
+
+
+
+![png](eda_files/eda_12_1.png)
+
+
 ## Diagnoses Over Time
 
 
@@ -267,6 +278,10 @@ fig.tight_layout()
 ```
 
 
+
+![png](eda_files/eda_16_0.png)
+
+
 ### Change in Diagnosis Between First Visit and Latest Visit
 
 
@@ -290,6 +305,9 @@ df_dx = df_dx.merge(df_last_imp, how='left', on='RID')
 df_dx = df_dx.dropna(axis=0)
 print(df_dx.shape)
 ```
+
+
+    (1648, 3)
 
 
 
@@ -331,6 +349,10 @@ for tick in ax[1].xaxis.get_major_ticks():
 
 
 
+![png](eda_files/eda_20_0.png)
+
+
+
 
 ```python
 outcomes = df_dx['transition'].value_counts()
@@ -358,6 +380,61 @@ columns = columns[-1:] + columns[:-1]
 table_changes = table_changes[columns]
 table_changes
 ```
+
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>DX</th>
+      <th>End CN</th>
+      <th>End MCI</th>
+      <th>End AD</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Start CN</td>
+      <td>555.0</td>
+      <td>48.0</td>
+      <td>12.0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Start MCI</td>
+      <td>39.0</td>
+      <td>578.0</td>
+      <td>156.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Start AD</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>259.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 
 
 
