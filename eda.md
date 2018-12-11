@@ -1,5 +1,5 @@
 ---
-title: Exploratory Data Analysis
+title: EDA
 notebook: eda.ipynb
 nav_include: 1
 ---
@@ -26,8 +26,6 @@ import matplotlib
 import matplotlib.pyplot as plt
 import seaborn as sns
 sns.set()
-from plotly.offline import download_plotlyjs, plot, iplot, init_notebook_mode
-init_notebook_mode(connected=True)
 
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.model_selection import train_test_split
@@ -36,10 +34,6 @@ import itertools
 import warnings
 warnings.filterwarnings('ignore')
 ```
-
-
-
-<script>requirejs.config({paths: { 'plotly': ['https://cdn.plot.ly/plotly-latest.min']},});if(!window.Plotly) {{require(['plotly'],function(plotly) {window.Plotly=plotly;});}}</script>
 
 
 
@@ -235,17 +229,6 @@ sns.pairplot(baseline_df, vars=cols, hue="DX_map", height=2.5, diag_kind='kde',
 ```
 
 
-
-
-
-    <seaborn.axisgrid.PairGrid at 0x1a2949f8d0>
-
-
-
-
-![png](eda_files/eda_12_1.png)
-
-
 ## Diagnoses Over Time
 
 
@@ -284,10 +267,6 @@ fig.tight_layout()
 ```
 
 
-
-![png](eda_files/eda_16_0.png)
-
-
 ### Change in Diagnosis Between First Visit and Latest Visit
 
 
@@ -311,9 +290,6 @@ df_dx = df_dx.merge(df_last_imp, how='left', on='RID')
 df_dx = df_dx.dropna(axis=0)
 print(df_dx.shape)
 ```
-
-
-    (1648, 3)
 
 
 
@@ -355,10 +331,6 @@ for tick in ax[1].xaxis.get_major_ticks():
 
 
 
-![png](eda_files/eda_20_0.png)
-
-
-
 
 ```python
 outcomes = df_dx['transition'].value_counts()
@@ -390,89 +362,9 @@ table_changes
 
 
 
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>DX</th>
-      <th>End CN</th>
-      <th>End MCI</th>
-      <th>End AD</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Start CN</td>
-      <td>555.0</td>
-      <td>48.0</td>
-      <td>12.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Start MCI</td>
-      <td>39.0</td>
-      <td>578.0</td>
-      <td>156.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Start AD</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>259.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
-
-
 ```python
-data = dict(
-    type='sankey',
-    node = dict(
-      pad = 55,
-      thickness = 10,
-      line = dict(
-        color = "black",
-        width = 0.5
-      ),
-      label = ["CN", "MCI", "AD"]*3,
-      color = ["red", "green", "blue"]*3
-    ),
-    link = dict(
-      source = list(list(zip(*tuples))[0]),
-      target = list(list(zip(*tuples))[1]),
-      value = list(list(zip(*tuples))[2])
-  ))
 
-layout =  dict(
-    title = "Change in diagnoses",
-    font = dict(
-      size = 20
-    )
-)
 
-fig = dict(data=[data], layout=layout)
-iplot(fig, validate=False)
 ```
 
 
