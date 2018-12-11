@@ -11,7 +11,7 @@ Here is the problem description. More.
 
 ## Motivation
 
-Here is the motivation
+Here is the motivation.
 
 ## Data Source Description
 
