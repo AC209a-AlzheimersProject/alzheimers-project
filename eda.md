@@ -22,13 +22,6 @@ nav_include: 1
 
 ### Description of ADNI Merge
 
-
-
-```python
-
-```
-
-
 Data Table Here
 
 ### Missing Values
@@ -40,7 +33,7 @@ Visualization Here
 
 
 
-![png](eda_files/eda_9_0.png)
+![png](eda_files/eda_8_0.png)
 
 
 ## Demographic Information
@@ -52,7 +45,7 @@ The patient demographics helped shape some of our goals and research questions. 
 
 
 
-![png](eda_files/eda_12_0.png)
+![png](eda_files/eda_11_0.png)
 
 
 ## Initial Diagnoses
@@ -78,7 +71,7 @@ We choose the first encoding, changing 'Dementia' to 'AD' since there is an equi
 
 
 
-![png](eda_files/eda_15_0.png)
+![png](eda_files/eda_14_0.png)
 
 
 ### Important Predictors for Initial Diagnosis
@@ -92,7 +85,7 @@ The histograms below correspond to four cognitive tests that show a promising se
 
 
 
-![png](eda_files/eda_18_0.png)
+![png](eda_files/eda_17_0.png)
 
 
 
@@ -107,7 +100,7 @@ The histograms below correspond to four cognitive tests that show a promising se
 
 
 
-![png](eda_files/eda_19_1.png)
+![png](eda_files/eda_18_1.png)
 
 
 ## Diagnoses Over Time
@@ -119,7 +112,7 @@ In addition to being able to predict initial diagnosis, we also aim to predict f
 
 
 
-![png](eda_files/eda_22_0.png)
+![png](eda_files/eda_21_0.png)
 
 
 We observe that the total number of diagnoses of each kind drops over time, which may perhaps be a result of patients not carrying out a follow up study for a number of different reasons.
@@ -133,7 +126,7 @@ Next, we show how MMSE scores vary over time for participants. We plot trajector
 
 
 
-![png](eda_files/eda_26_0.png)
+![png](eda_files/eda_25_0.png)
 
 
 As hypothesized, the dropoff of MMSE scores for the MCI group is faster and larger than that for the CN group. It is striking to observe that many patients initially diagnosed with AD have no observations after 3 years.
@@ -158,7 +151,7 @@ Using our plots above, we turn to the question of predicting change in diagnoses
 
 
 
-![png](eda_files/eda_32_0.png)
+![png](eda_files/eda_31_0.png)
 
 
 A general pattern seems to be that the total number of MCI and CN diagnoses has decreased while the number of AD diagnoses has increased over time, which is unsurprising.
@@ -233,9 +226,3 @@ The Sankey Diagram below illustrates changes in diagnoses and highlights some ma
 
 
 ## Deep Dive into MMSE
-
-
-
-```python
-
-```

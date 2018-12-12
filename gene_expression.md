@@ -1,22 +1,30 @@
 ---
+<<<<<<< HEAD
 title: Gene Expression 
 notebook: gene_expression.ipynb
 nav_include: 4
 ---
 ## Gene Expression Profiles
+=======
+title: Gene Expression Profiles
+notebook: gene_expression.ipynb
+nav_include: 4
+---
 
+## Contents
+{:.no_toc}
+*  
+{: toc}
+>>>>>>> a379e8a2ef7909bc24fc11f5b9f83b5b9ab2012b
 
+## Consideration of an Alternative Question: Genetic Predictors
 
-
-
-## Gene Expression Profiles
-----
-Consideration of an Alternative Question: Genetic Predictors
 Rather than creating a predictive model of diagnosis using various types of patient information, we had previously considered developing a model from the detailed biological data available to consider the importance of genes on chromosome 21 in Alzheimer’s Disease. Chromosome 21 is known to be very important in the etiology of AD - for example, over half of those born with an extra copy of Chr21 (a condition known as Down’s Syndrome) will go on to develop Alzheimer’s Disease [1]. While it is commonly said that the link between Chr21 and AD is due to the gene for the Amyloid Precursor Protein (APP) [2], there are many other genes on this chromosome that have also been linked to Alzheimer’s disease [3].
 Of the wealth of genetic data that ADNI publishes, we drew primarily on the microarray gene expression profile dataset, which used ~50,000 genetic probes to assess the activity of genes across the genome. The outcome for each patient in the gene profile dataset was determined using the ADNIMerge dataset. To identify only chromosome 21 genes, the Affymetrix gene annotation dataset was used to annotate the gene expression data set with chromosomal location of the target gene for every probe. The combination of these three datasets created the possibility of building a model based on the genes of any chromosome to predict any clinical outcome. The preliminary models (discussed below) suggested little promise of interesting results to be derived from considering gene expression data in isolation, so we ultimately decided to focus on a more general predictive model involving more feature types instead.
 
 
 **Sources**
+
 [1] https://www.nia.nih.gov/health/alzheimers-disease-people-down-syndrome
 
 [2] https://www.alz.org/alzheimers-dementia/what-is-dementia/types-of-dementia/down-syndrome
@@ -520,7 +528,7 @@ To determine the chromosomal location and biological role of any gene, we used t
 
 
 
-From this dataset, we find 13 features corresponding to probes of the APP gene, a major implicated gene in Alzheimer's Disease. 
+From this dataset, we find 13 features corresponding to probes of the APP gene, a major implicated gene in Alzheimer's Disease.
 
 To analyse the role of different genes on chromosome 21 in the etiology of Alzheimer's Disease, a good baseline model would be to use these 13 features in a simple baseline model, so we fitted a simple logistic regression to an X data set of these 13 features.
 
@@ -620,7 +628,7 @@ These results are slightly more promising, and warrant an investigation into the
 
 
 
-    Biggest positive coefficient: 
+    Biggest positive coefficient:
 
 
 
@@ -694,7 +702,7 @@ These results are slightly more promising, and warrant an investigation into the
 
 
 
-    Biggest negative coefficient: 
+    Biggest negative coefficient:
 
 
 
