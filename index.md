@@ -3,7 +3,7 @@ title: Introduction
 ---
 
 ### Team 41: Nathan Einstein, Rory Maizels, Robbert Struyven, Abhimanyu Vasishth
-AC209a Fall 2018   
+AC209a Fall 2018    
 
 ## Problem Description and Motivation
 
