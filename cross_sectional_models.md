@@ -1,7 +1,7 @@
 ---
 title: Cross-Sectional Models
 notebook: cross_sectional_models.ipynb
-nav_include: 3
+nav_include: 2
 ---
 
 ## Contents
