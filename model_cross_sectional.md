@@ -1,15 +1,5 @@
----
-title: Cross-Sectional Model
-notebook: model_cross_sectional.ipynb
-nav_include: 2
----
 
-## Contents
-{:.no_toc}
-*  
-{: toc}
-
-
+# Model Cross Sectional
 
 
 ```python
@@ -24,14 +14,11 @@ pd.set_option('display.max_columns', 100)
 ```
 
 
-
-
 ```python
 df = pd.read_csv("uncleaned.csv")
 df = pd.read_csv("cleaned.csv")
 df.head()
 ```
-
 
 
 
@@ -151,19 +138,15 @@ df.head()
 
 
 
-
 ```python
 acidlist=['palmitic', 'palmitoleic', 'stearic', 'oleic', 'linoleic', 'linolenic', 'arachidic', 'eicosenoic']
 ```
-
-
 
 
 ```python
 dfsouth=df[df.regionstring=='South']
 dfsouth.head()
 ```
-
 
 
 
@@ -285,13 +268,11 @@ dfsouth.head()
 ## Predicting via SVM
 
 
-
 ```python
 dfnew=df[['eicosenoic', 'region', 'regionstring']]
 dfnew['linoarch']=(0.969/1022.0)*df.linoleic + (0.245/105.0)*df.arachidic
 dfnew.head()
 ```
-
 
 
 
@@ -350,12 +331,10 @@ dfnew.head()
 
 
 
-
 ```python
 dfnosouth=df[df.regionstring!='South']
 dfnosouth.head()
 ```
-
 
 
 
@@ -475,15 +454,12 @@ dfnosouth.head()
 
 
 
-
 ```python
 plt.scatter(dfnosouth.linoleic, dfnosouth.arachidic, c=dfnosouth.region, s=50);
 ```
 
 
-
 ![png](model_cross_sectional_files/model_cross_sectional_8_0.png)
-
 
 
 
@@ -510,8 +486,6 @@ def plot_svc_decision_function(clf, ax=None):
 ```
 
 
-
-
 ```python
 X = dfnosouth[['linoleic', 'arachidic']]
 y = (dfnosouth.regionstring.values=='Sardinia')*1
@@ -526,9 +500,7 @@ plt.scatter(Xtest[:, 0], Xtest[:, 1], c=ytest, s=50, marker="s", cmap='spring', 
 ```
 
 
-
 ![png](model_cross_sectional_files/model_cross_sectional_10_0.png)
-
 
 
 
@@ -539,9 +511,7 @@ clf.score(Xtest, ytest)
 
 
 
-
     1.0
-
 
 
 
@@ -553,14 +523,12 @@ confusion_matrix(clf.predict(Xtest), ytest)
 
 
 
-
     array([[31,  0],
            [ 0, 32]])
 
 
 
 ## Allowing for crossovers
-
 
 
 ```python
@@ -586,8 +554,6 @@ def get_optim_classifier_svm(indf, inacidlist, clon, clonval):
 ```
 
 
-
-
 ```python
 thesvcfit, Xtr, ytr, Xte, yte = get_optim_classifier_svm(dfnosouth, ['linoleic','arachidic'],'regionstring', "Sardinia")
 #thesvcfit, Xtr, ytr, Xte, yte = get_optim_classifier_binary(dfsouthns, ['palmitic','palmitoleic'],'area', 3)
@@ -597,12 +563,10 @@ thesvcfit.best_estimator_, thesvcfit.best_params_, thesvcfit.best_score_
 
 
 
-
     (SVC(C=0.071968567300115138, cache_size=200, class_weight=None, coef0=0.0,
        decision_function_shape=None, degree=3, gamma='auto', kernel='linear',
        max_iter=-1, probability=True, random_state=None, shrinking=True,
        tol=0.001, verbose=False), {'C': 0.071968567300115138}, 1.0)
-
 
 
 
@@ -621,7 +585,6 @@ print(dict(kernel="linear",**thesvcfit.best_params_))
 clsvc=SVC(**dict(kernel="linear",**thesvcfit.best_params_)).fit(Xtr, ytr)
 plot_svm_new(clsvc, Xtr, ytr, Xte, yte)
 ```
-
 
     {'kernel': 'linear', 'C': 0.071968567300115138}
 
