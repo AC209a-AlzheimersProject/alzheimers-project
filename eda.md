@@ -40,14 +40,7 @@ Visualization Here
 
 
 
-
-
-    <matplotlib.axes._subplots.AxesSubplot at 0x1a23bb54e0>
-
-
-
-
-![png](eda_files/eda_9_1.png)
+![png](eda_files/eda_9_0.png)
 
 
 ## Demographic Information
@@ -109,7 +102,7 @@ The histograms below correspond to four cognitive tests that show a promising se
 
 
 
-    <seaborn.axisgrid.PairGrid at 0x1a2aba44e0>
+    <seaborn.axisgrid.PairGrid at 0x1a1d578390>
 
 
 
@@ -153,19 +146,12 @@ Using our plots above, we turn to the question of predicting change in diagnoses
 
 
 
-    (1648, 3)
 
 
 
 
 
 
-
-
-
-
-
-![png](eda_files/eda_32_0.png)
 
 
 A general pattern seems to be that the total number of MCI and CN diagnoses has decreased while the number of AD diagnoses has increased over time, which is unsurprising.
@@ -175,61 +161,6 @@ We create a table, with each entry representing a participant's initial and most
 The Sankey Diagram below illustrates changes in diagnoses and highlights some major trends: that a majority of patients have the same initial and most recent diagnoses.
 
 
-
-
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>DX</th>
-      <th>End CN</th>
-      <th>End MCI</th>
-      <th>End AD</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>Start CN</td>
-      <td>555.0</td>
-      <td>48.0</td>
-      <td>12.0</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Start MCI</td>
-      <td>39.0</td>
-      <td>578.0</td>
-      <td>156.0</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Start AD</td>
-      <td>0.0</td>
-      <td>1.0</td>
-      <td>259.0</td>
-    </tr>
-  </tbody>
-</table>
-</div>
 
 
 
