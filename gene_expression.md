@@ -1,32 +1,8 @@
----
-title: Gene Expression Profiles
-notebook: gene_expression.ipynb
-nav_include: 4
----
-
-## Contents
-{:.no_toc}
-*  
-{: toc}
 
 ## Gene Expression Profiles
 
 
 
-```python
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import math
-import seaborn as sns
-from sklearn.linear_model import LogisticRegressionCV
-from sklearn.model_selection import cross_val_score
-from imblearn.over_sampling import SMOTE
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
-
-sns.set()
-```
 
 
 ## Gene Expression Profiles
@@ -56,45 +32,22 @@ To determine the chromosomal location and biological role of any gene, we used t
 
 
 
-```python
-annote = pd.read_csv("excel_annotations.csv", skiprows = 25)
-```
 
 
 
 
-```python
-dropcolumns = ['GeneChip Array','Species Scientific Name','Annotation Date','Sequence Type','Sequence Source',
-               'Transcript ID(Array Design)','Target Description','Representative Public ID',
-               'Archival UniGene Cluster','Genome Version','Unigene Cluster Type','Ensembl','EC','OMIM',
-              'FlyBase','AGI','WormBase','MGI Name','RGD Name','SGD accession number','QTL','Annotation Description',
-              'Annotation Transcript Cluster','Transcript Assignments','Annotation Notes']
-```
 
 
 
 
-```python
-annote = annote.drop(dropcolumns, axis = 1)
-```
 
 
 
 
-```python
-Chromosome = []
-for item in annote["Chromosomal Location"]:
-    Chromosome.append(item.replace("chr","").replace('cen','').replace('-','').replace('p','q').split('q')[0])
-annote['Chromosome']=Chromosome
-```
 
 
 
 
-```python
-print("Chromosome 21 genes present in gene expression profile dataset: ",sum(annote['Chromosome']=='21'))
-
-```
 
 
     Chromosome 21 genes present in gene expression profile dataset:  609
@@ -102,63 +55,20 @@ print("Chromosome 21 genes present in gene expression profile dataset: ",sum(ann
 
 
 
-```python
-GEP_df = pd.read_csv("ADNI_Gene_Expression_Profile.csv", low_memory=False, index_col = 'Phase')
-
-ID_column = GEP_df.iloc[1].copy().values
-ID_column[0] = 'LocusLink'
-ID_column[1] = 'Symbol'
-GEP_df.iloc[1] = GEP_df.columns
-GEP_df.columns = ID_column
-GEP_df.rename(index={'SubjectID':'Phase'}, inplace=True)
-
-GEP_df = GEP_df.rename_axis("Gene_PSID")
-GEP_df = GEP_df.rename_axis("SubjectID", axis = 'columns')
-
-GEP_df.loc['Phase'][0] = np.nan
-GEP_df.loc['Phase'][1] = np.nan
-
-GEP_df.drop(['ProbeSet'])
-
-nan = GEP_df.columns[-1]
-GEP_df = GEP_df.rename(columns={nan:'Biological Name'})
-
-```
 
 
 
 
-```python
-chrlist = [0]*len(GEP_df.index)
-for i, gene in enumerate(GEP_df.index):
-    gene_id = gene
-    try:
-        gene_ch = annote[annote['Probe Set ID']==gene_id]['Chromosome'].values[0]
-        chrlist[i] = gene_ch
-    except IndexError:
-        chrlist[i] = np.nan
-```
 
 
 
 
-```python
-GEP_df['Chromosome'] = chrlist
-```
 
 
 ### Chromosome 21 Dataset
 
 
 
-```python
-GEP_head = GEP_df.iloc[0:8]
-GEP_data = GEP_df.iloc[8:]
-c21 = GEP_data[GEP_data['Chromosome']=='21']
-GEP_C21 = pd.concat((GEP_head,c21))
-
-display(GEP_C21.head(15))
-```
 
 
 
@@ -596,46 +506,17 @@ display(GEP_C21.head(15))
 
 
 
-```python
-
-```
 
 
 
 
-```python
-adni_df = pd.read_csv("ADNIMERGE.csv", low_memory=False)
-```
 
 
 
 
-```python
-keep_columns = ['PTID','DX','Month']
-outcome_df = adni_df[keep_columns]
-```
 
 
-
-
-```python
-"""
-if any diagnoses are dementia, report dementia - if all diagnoses ara NaN, report NaN.
-"""
-
-
-n = len(GEP_C21.columns[2:-2])
-target = np.full(n,0)
-for i, col in enumerate(GEP_C21.columns[2:-2]):
-    if (outcome_df[outcome_df['PTID']==col]['DX'] == 'Dementia').any():
-        target[i] = 1
-    elif (pd.Series([str(o) == 'nan' for o in outcome_df[outcome_df['PTID']==col]['DX']])).all():
-        target[i] = np.nan
-
-```
-
-
-From this dataset, we find 13 features corresponding to probes of the APP gene, a major implicated gene in Alzheimer's Disease.
+From this dataset, we find 13 features corresponding to probes of the APP gene, a major implicated gene in Alzheimer's Disease. 
 
 To analyse the role of different genes on chromosome 21 in the etiology of Alzheimer's Disease, a good baseline model would be to use these 13 features in a simple baseline model, so we fitted a simple logistic regression to an X data set of these 13 features.
 
@@ -643,78 +524,40 @@ To ensure that imbalance in the data was not an issue, we used Synthetic Minorit
 
 
 
-```python
-APP_PSID = annote[annote['Gene Symbol'] == 'APP']['Probe Set ID'].values
-
-no_markers = len(APP_PSID)
-no_patients = len(GEP_C21.columns[2:-2])
-```
 
 
 
 
-```python
-X = np.zeros((no_patients,no_markers))
-
-for i, col in enumerate(GEP_C21.columns[2:-2]):
-    patient = GEP_C21[col]
-    for j, PSID in enumerate(APP_PSID):
-        X[i,j] = patient[PSID]
-```
 
 
 
 
-```python
-X_train, X_test, y_train, y_test = train_test_split(X, target, test_size=0.3, random_state=42)
-```
 
 
 
 
-```python
-sm =SMOTE(ratio=1, random_state=42)
-X_TR, y_TR = sm.fit_resample(X_train,y_train)
-```
 
 
 
 
-```python
-from sklearn.linear_model import LogisticRegressionCV
-from sklearn.model_selection import cross_val_score
-```
 
 
 
 
-```python
-logreg = LogisticRegressionCV(cv=5, max_iter=10000).fit(X_TR,y_TR)
-```
 
 
 
 
-```python
-app_crossvalscore = np.mean(cross_val_score(logreg,X_TR,y_TR, cv=5))
-```
 
 
 
 
-```python
-app_testscore = accuracy_score(logreg.predict(X_test),y_test)
-```
 
 
 The cross-validation and test scores for this baseline model are:
 
 
 
-```python
-print("Cross-validation score ",app_crossvalscore)
-print("Test score ",app_testscore)
-```
 
 
     Cross-validation score  0.5798706240487063
@@ -727,73 +570,36 @@ Next, we looked to build a similar simplistic model using all genes on chromosom
 
 
 
-```python
-PSIDs = GEP_C21.index[8:].values
-
-no_markers2 = len(PSIDs)
-no_patients2 = len(GEP_C21.columns[2:-2])
-
-```
 
 
 
 
-```python
-X2 = np.zeros((no_patients2,no_markers2))
-
-for i, col in enumerate(GEP_C21.columns[2:-2]):
-    patient = GEP_C21[col]
-    for j, PSID in enumerate(PSIDs):
-        X2[i,j] = patient[PSID]
-
-
-```
 
 
 
 
-```python
-X_tra, X_tst, y_tra, y_tst = train_test_split(X2,target, test_size=0.3, random_state=42)
-```
 
 
 
 
-```python
-sm = SMOTE(ratio=1, random_state=42)
-X_TR2, y_TR2 = sm.fit_resample(X_tra,y_tra)
-```
 
 
 
 
-```python
-logreg2 = LogisticRegressionCV(cv=5, max_iter=10000).fit(X_TR2,y_TR2)
-```
 
 
 
 
-```python
-c21_crossvalscore = np.mean(cross_val_score(logreg2,X_TR2,y_TR2, cv=5))
-```
 
 
 
 
-```python
-c21_testscore = np.mean(cross_val_score(logreg2,X_tst,y_tst, cv=5))
-```
 
 
 The results of this are:
 
 
 
-```python
-print("Cross-validation score ",c21_crossvalscore)
-print("Test score ",c21_testscore)
-```
 
 
     Cross-validation score  0.8115677321156773
@@ -804,23 +610,13 @@ These results are slightly more promising, and warrant an investigation into the
 
 
 
-```python
-big = np.argmax(logreg2.coef_)
-small = np.argmin(logreg2.coef_)
-big_gene = PSIDs[big]
-small_gene = PSIDs[small]
-```
 
 
 
 
-```python
-print("Biggest positive coefficient: ")
-annote[annote['Probe Set ID']==big_gene]
-```
 
 
-    Biggest positive coefficient:
+    Biggest positive coefficient: 
 
 
 
@@ -892,13 +688,9 @@ annote[annote['Probe Set ID']==big_gene]
 
 
 
-```python
-print("Biggest negative coefficient: ")
-annote[annote['Probe Set ID']==small_gene]
-```
 
 
-    Biggest negative coefficient:
+    Biggest negative coefficient: 
 
 
 
@@ -974,22 +766,18 @@ This suggests that there may be limited immediate benefit to using gene expressi
 
 
 
-```python
-xpos = X_TR[y_TR==1]
-xneg = X_TR[y_TR==0]
-plt.subplots(3,4, figsize=(16,8))
-plt.suptitle("Amyloid Precursor Protein Gene Expression Profile for Different Microarray Probes", y=1.04, fontsize =22)
-for i in range(12):
-    ax = plt.subplot(3,4,i+1)
-    ax.set_title("Microarray Probe {0}".format(str(i+1)))
-    sns.distplot(xpos[i], bins=30, color = 'red', ax = ax, hist=False, label = "AD")
-    sns.distplot(xneg[i], bins=30, color = 'blue', ax = ax, hist=False, label = 'Not AD')
-    ax.set_xlabel("Probe Expression Level")
-    ax.set_ylabel("Density")
-    ax.set_ylim((0,1))
-plt.tight_layout()
-plt.show()
-```
+
+
+    /anaconda3/lib/python3.6/site-packages/scipy/stats/stats.py:1713: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of `arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
+      return np.add.reduce(sorted[indexer] * weights, axis=axis) / sumval
+
+
+
+![png](gene_expression_files/gene_expression_43_1.png)
+
+
+
+
 
 
     /anaconda3/lib/python3.6/site-packages/scipy/stats/stats.py:1713: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of `arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
@@ -998,32 +786,6 @@ plt.show()
 
 
 ![png](gene_expression_files/gene_expression_44_1.png)
-
-
-
-
-```python
-bigboy = X_TR2[:,13]
-
-bigyes = bigboy[y_TR2==1]
-bignah = bigboy[y_TR2==0]
-plt.figure(figsize=(16,8))
-sns.distplot(bigyes, bins=30, color = 'red', hist=False, label = "AD")
-sns.distplot(bignah, bins=30, color = 'blue', hist=False, label = 'Not AD')
-plt.title("Gene Expression Profile: Best Predictor in Logistic Model", fontsize=22)
-plt.ylim((0,2))
-plt.xlabel("Gene Expression Level")
-plt.ylabel("Density")
-plt.show()
-```
-
-
-    /anaconda3/lib/python3.6/site-packages/scipy/stats/stats.py:1713: FutureWarning: Using a non-tuple sequence for multidimensional indexing is deprecated; use `arr[tuple(seq)]` instead of `arr[seq]`. In the future this will be interpreted as an array index, `arr[np.array(seq)]`, which will result either in an error or a different result.
-      return np.add.reduce(sorted[indexer] * weights, axis=axis) / sumval
-
-
-
-![png](gene_expression_files/gene_expression_45_1.png)
 
 
 When researching details of the gene expression dataset, it was found the the samples from which the data is derived were taken from blood, not the central nervous system. This means that the gene expression profiles are not indicative of the cellular environment in the brain, as the gene expression profiles of different tissues varies hugely and the central nervous system is separated from the rest of the body by a near-impervious blood-brain-barrier. As such, even though other models could be tested and different chromosomes could be examined, it was decided that the chance of finding valuable data was too low, and as such the group focussed on other aims.
