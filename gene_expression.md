@@ -1,21 +1,9 @@
 ---
-<<<<<<< HEAD
 title: Gene Expression 
 notebook: gene_expression.ipynb
-nav_include: 4
+nav_include: 5
 ---
 ## Gene Expression Profiles
-=======
-title: Gene Expression Profiles
-notebook: gene_expression.ipynb
-nav_include: 4
----
-
-## Contents
-{:.no_toc}
-*  
-{: toc}
->>>>>>> a379e8a2ef7909bc24fc11f5b9f83b5b9ab2012b
 
 ## Consideration of an Alternative Question: Genetic Predictors
 
