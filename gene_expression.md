@@ -1,4 +1,8 @@
-
+---
+title: Gene Expression 
+notebook: gene_expression.ipynb
+nav_include: 4
+---
 ## Gene Expression Profiles
 
 
