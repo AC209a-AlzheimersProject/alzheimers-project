@@ -1,7 +1,7 @@
 ---
 title: Gene Expression Profiles
 notebook: gene_expression.ipynb
-nav_include: 1
+nav_include: 4
 ---
 
 ## Contents
