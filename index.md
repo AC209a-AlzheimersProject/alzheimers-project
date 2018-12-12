@@ -25,15 +25,18 @@ Secondly, the clear importance of exam scores necessitates a deeper dive into th
 
 For the AC209 component of this project, we use several unsupervised learning algorithms to identify clusters of common groups along the AD/dementia spectrum that mimic the AD/LMCI/EMCI/CN diagnoses given to patients in the ADNI studies, to better understand to what degree these imposed diagnoses reflect natural breaks in the evolution of dementia.
 
-## Related Work
-
-Here is our related work.
+## Conclusions
 
 
 
+## Future Directions
 
 
-Sources:
+
+
+
+
+## Sources:
 
 [1] Matthews, Kevin A. et al. "Racial and ethnic estimates of Alzheimer's disease and related dementias in the United States (2015–2060) in adults aged ≥65 years." Alzheimer's & Dementia: The Journal of the Alzheimer's Association, Volume 0 , Issue 0.
 
