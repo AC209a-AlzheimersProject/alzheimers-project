@@ -22,19 +22,32 @@ nav_include: 1
 
 ### Description of ADNI Merge
 
-Data Table Here
+The ADNI study is made up of four distinct phases – ADNI1, ADNIGO, ADNI2, and ADNI3 – in each of which new participants were recruited while existing participants from earlier phases continued to be monitored. Our main dataset is the ADNI Merge dataset, from the [Alzheimer's Disease Neuroimaging Initiative](http://adni.loni.usc.edu/).  This is essentially a dataset combining key predictors from all four phases, assembled using various sources of data within the ADNI repository. A high-level overview of the categories is as follows:
+
+1. **Cognitive Tests**: some of the predictors, such as MMSE (Mini-Mental State Examination), CDRSB (Clinical Dementia Rating Sum of Boxes), ADAS (Alzheimer’s Disease Assessment Scale–Cognitive subscale) and RAVLT (Rey Auditory Verbal Learning Test) come from cognitive tests that clinicians used to base the patient diagnoses on.
+2. **Demographic Variables**: such as Age, Gender, Marriage status and Education levels.
+4. **Brain-Related Variables**: these variables, such as Hippocampus, Ventricles, WholeBrain, Entorhinal, Fusiform and MidTemp) measure various aspects of the brain.
+3. **Important Biomarkers**: biomarkers, such as A-beta (Amyloid Beta), Tau, APOE4 and FDG, are important proteins or biomarkers that are associated with Alzheimer’s disease or Mild Cognitive Impairment in a lot of medical literature about the disease.
+
+The table below provides a more detailed overview of the key variables present in our dataset, the range of values that these variables take on and the percentage of missing values, which is a key component to take into consideration with this dataset.
+
+![png](eda_files/tests.png "Tests")
+
+![png](eda_files/medical.png "Medical")
 
 ### Missing Values
 
-Visualization Here
+Given the strict data-collection protocol followed and strict criteria for selecting patients so as to prevent drop-out, we expect that missing values are typically Missing At Random (MAR); missingness is due solely to observable factors such as the follow-up time (i.e. not all variables are re-collected at every follow-up), the patient’s initial diagnosis, and the particular ADNI phase (given that the data are currently in longform). Especially where the missingness is due to differing procedures carried out for patients with different baseline diagnoses, we must ensure that the way we handle missing values does not introduce bias in our model.
 
 
 
 
 
 
-![png](eda_files/eda_8_0.png)
+![png](eda_files/eda_9_0.png)
 
+
+The plot above shows that certain categories, such as the Everyday Cognition (Ecog) are missing in general for the ADNI 1 phase, whereas the brain related predictors are missing for ADNI 3. One important observation is that the important biolarkers (such as Amyloid Beta, Tau and PTau) are missing partially throughout the data. The reason for this is that these are taken from a patient's Cerebraospinal Fluid ([CSF](https://medlineplus.gov/ency/article/003428.htm)), which requires an invasive procedure to obtain. Therefore, not all patients undergo this procedure during a baseline test and we see a lot of missing values here.
 
 ## Demographic Information
 
@@ -45,7 +58,7 @@ The patient demographics helped shape some of our goals and research questions. 
 
 
 
-![png](eda_files/eda_11_0.png)
+![png](eda_files/eda_13_0.png)
 
 
 ## Initial Diagnoses
@@ -71,7 +84,7 @@ We choose the first encoding, changing 'Dementia' to 'AD' since there is an equi
 
 
 
-![png](eda_files/eda_14_0.png)
+![png](eda_files/eda_16_0.png)
 
 
 ### Important Predictors for Initial Diagnosis
@@ -85,7 +98,7 @@ The histograms below correspond to four cognitive tests that show a promising se
 
 
 
-![png](eda_files/eda_17_0.png)
+![png](eda_files/eda_19_0.png)
 
 
 
@@ -100,7 +113,7 @@ The histograms below correspond to four cognitive tests that show a promising se
 
 
 
-![png](eda_files/eda_18_1.png)
+![png](eda_files/eda_20_1.png)
 
 
 ## Diagnoses Over Time
@@ -112,7 +125,7 @@ In addition to being able to predict initial diagnosis, we also aim to predict f
 
 
 
-![png](eda_files/eda_21_0.png)
+![png](eda_files/eda_23_0.png)
 
 
 We observe that the total number of diagnoses of each kind drops over time, which may perhaps be a result of patients not carrying out a follow up study for a number of different reasons.
@@ -126,7 +139,7 @@ Next, we show how MMSE scores vary over time for participants. We plot trajector
 
 
 
-![png](eda_files/eda_25_0.png)
+![png](eda_files/eda_27_0.png)
 
 
 As hypothesized, the dropoff of MMSE scores for the MCI group is faster and larger than that for the CN group. It is striking to observe that many patients initially diagnosed with AD have no observations after 3 years.
@@ -151,7 +164,7 @@ Using our plots above, we turn to the question of predicting change in diagnoses
 
 
 
-![png](eda_files/eda_31_0.png)
+![png](eda_files/eda_33_0.png)
 
 
 A general pattern seems to be that the total number of MCI and CN diagnoses has decreased while the number of AD diagnoses has increased over time, which is unsurprising.
@@ -226,3 +239,9 @@ The Sankey Diagram below illustrates changes in diagnoses and highlights some ma
 
 
 ## Deep Dive into MMSE
+
+
+
+```python
+
+```
