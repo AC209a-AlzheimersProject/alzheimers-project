@@ -6,7 +6,8 @@ nav_include: 4
 
 ## Gene Expression Profiles
 
-Consideration of an Alternative Question: Genetic Predictors
+**Consideration of an Alternative Question: Genetic Predictors**
+
 Rather than creating a predictive model of diagnosis using various types of patient information, we had previously considered developing a model from the detailed biological data available to consider the importance of genes on chromosome 21 in Alzheimer’s Disease. Chromosome 21 is known to be very important in the etiology of AD - for example, over half of those born with an extra copy of Chr21 (a condition known as Down’s Syndrome) will go on to develop Alzheimer’s Disease [1]. While it is commonly said that the link between Chr21 and AD is due to the gene for the Amyloid Precursor Protein (APP) [2], there are many other genes on this chromosome that have also been linked to Alzheimer’s disease [3].
 
 Of the wealth of genetic data that ADNI publishes, we drew primarily on the microarray gene expression profile dataset, which used ~50,000 genetic probes to assess the activity of genes across the genome. The outcome for each patient in the gene profile dataset was determined using the ADNIMerge dataset. To identify only chromosome 21 genes, the Affymetrix gene annotation dataset was used to annotate the gene expression data set with chromosomal location of the target gene for every probe. The combination of these three datasets created the possibility of building a model based on the genes of any chromosome to predict any clinical outcome. The preliminary models (discussed below) suggested little promise of interesting results to be derived from considering gene expression data in isolation, so we ultimately decided to focus on a more general predictive model involving more feature types instead.
