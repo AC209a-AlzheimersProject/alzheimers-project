@@ -4732,7 +4732,7 @@ lgbm=LGBMClassifier(random_state=1)
 ![png](model_longitudinal_files/model_longitudinal_137_0.png)
 
 
-**Conclusion:** For the model predicting normal Baseline to MCI or Alzheimer progression the Logistic regression, Gradiant Boosting and LGBM model have the highest AUROC and discrimitive power.
+**Conclusion:** For the model predicting normal Baseline to MCI or Alzheimer progression the Logistic regression, Gradient Boosting and LGBM model have the highest AUROC and predictive power.
 
 
 
@@ -4966,4 +4966,4 @@ lgbm=LGBMClassifier(random_state=1)
 
 
 
-**Conclusion:** For the model predicting MCI Baseline to  Alzheimer progression the Gradiant Boosting, XGBoost and LGBM model that have the highest AUROC and discrimitive power!
+**Conclusion:** For the model predicting MCI Baseline to  Alzheimer progression the Gradient Boosting, XGBoost and LGBM model that have the highest AUROC and predictive power!
