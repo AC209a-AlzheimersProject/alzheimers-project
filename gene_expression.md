@@ -4,6 +4,11 @@ notebook: gene_expression.ipynb
 nav_include: 5
 ---
 
+## Contents
+{:.no_toc}
+*  
+{: toc}
+
 ## Consideration of an Alternative Question: Genetic Predictors
 
 Rather than creating a predictive model of diagnosis using various types of patient information, we had previously considered developing a model from the detailed biological data available to consider the importance of genes on chromosome 21 in Alzheimer’s Disease. Chromosome 21 is known to be very important in the etiology of AD - for example, over half of those born with an extra copy of Chr21 (a condition known as Down’s Syndrome) will go on to develop Alzheimer’s Disease [1]. While it is commonly said that the link between Chr21 and AD is due to the gene for the Amyloid Precursor Protein (APP) [2], there are many other genes on this chromosome that have also been linked to Alzheimer’s disease [3].
