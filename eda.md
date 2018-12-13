@@ -233,15 +233,3 @@ The Sankey Diagram below illustrates changes in diagnoses and highlights some ma
 
 
 ![png](eda_files/sankey.png "Sankey")
-
-
-
-
-
-## Deep Dive into MMSE
-
-
-
-```python
-
-```
