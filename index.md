@@ -19,22 +19,13 @@ Numerous relational tables are made available with detailed information on patie
 
 ## Research Questions
 
-Early exploratory data analysis revealed that cognitive assessment scores could account for much of the variability in patient diagnoses, in large part given the heavy reliance on these exams for the definition of the ADNI diagnosis classes. A model designed to predict diagnosis involving these exams as predictors therefore seemed of relatively little value. Thus, we instead focus on identifying strong predictors of a patient’s prognosis (i.e. evolution over time) given the information available at the patient's baseline visit (t=0). We therefore develop two separate models: one for individuals who begin as cognitively normal, one for those diagnosed at baseline as having mild cognitive impairment.
+Our cross-sectional model predicting initial diagnoses reveals that cognitive assessment scores could account for much of the variability in patient diagnoses, in large part given the heavy reliance on these exams for the definition of the ADNI diagnosis classes. In fact, we obtain a training and test score of around 90% in predicting baseline diagnoses using just the Mini-Mental State Examination (MMSE) and Clinical Dementia Rating Sum of Boxes (CDRSB) scores. A model designed to predict diagnosis involving these exams as predictors therefore seemed of relatively little value.
 
-Secondly, the clear importance of exam scores necessitates a deeper dive into the various exams -- in particular, the MMSE, CDRSB, and ADAS -- and the specific aspects of dementia that they measure. While neurological exams are clearly the most cost-effective means of identifying Alzheimer’s, it remains to be seen how well these exam scores, in combination with other factors, can predict change in diagnosis.
+Another area of exploration was using gene expression data to build a predictive model of diagnosis. For instance, Chromosome 21 is known to be very important in the etiology of AD - for example, over half of those born with an extra copy of Chr21 (a condition known as Down’s Syndrome) will go on to develop Alzheimer’s Disease. However, the preliminary models using here suggested little promise of interesting results to be derived from considering gene expression data in isolation. Additionally, it was found the the samples from which the data is derived were taken from blood, not the central nervous system, which means that the gene expression profiles are not indicative of the cellular environment in the brain, as the gene expression profiles of different tissues varies hugely and the central nervous system is separated from the rest of the body by a near-impervious blood-brain-barrier.
 
-For the AC209 component of this project, we use several unsupervised learning algorithms to identify clusters of common groups along the AD/dementia spectrum that mimic the AD/LMCI/EMCI/CN diagnoses given to patients in the ADNI studies, to better understand to what degree these imposed diagnoses reflect natural breaks in the evolution of dementia.
+Thus, our main focus is on developing a predictive model of a patient’s prognosis (i.e. evolution over time) given the information available at the patient's baseline visit (t=0) and using these models for identifying strong predictors. We therefore develop two separate models: one for individuals who begin as cognitively normal, one for those diagnosed at baseline as having mild cognitive impairment.
 
-## Conclusions
-
-
-
-## Future Directions
-
-
-
-
-
+It is important to keep in mind that the classes in our classification problem (Cognitively Normal, Mild Cognitive Impairment and Alzheimer's Disease) are not the "ground truth" i.e. doctors and diagnosticians use heuristics based on test scores such as the MMSE or CDRSB in order to assign these diagnoses to patients. Therefore, for the AC209 component of this project, we use some unsupervised learning algorithms to identify clusters of common groups along the AD/dementia spectrum that mimic the AD/LMCI/EMCI/CN diagnoses given to patients in the ADNI studies, to better understand to what degree these imposed diagnoses reflect natural breaks in the evolution of dementia.
 
 ## Sources:
 
