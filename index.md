@@ -3,7 +3,7 @@ title: Introduction
 ---
 
 ### Team 41: Nathan Einstein, Rory Maizels, Robbert Struyven, Abhimanyu Vasishth
-AC209a Fall 2018         
+AC209a Fall 2018          
 
 ## Problem Description and Motivation
 
@@ -21,7 +21,7 @@ Numerous relational tables are made available with detailed information on patie
 
 Our cross-sectional model predicting initial diagnoses reveals that cognitive assessment scores could account for much of the variability in patient diagnoses, in large part given the heavy reliance on these exams for the definition of the ADNI diagnosis classes. In fact, we obtain a training and test score of around 90% in predicting baseline diagnoses using just the Mini-Mental State Examination (MMSE) and Clinical Dementia Rating Sum of Boxes (CDRSB) scores. A model designed to predict diagnosis involving these exams as predictors therefore seemed of relatively little value.
 
-Another area of exploration was using gene expression data to build a predictive model of diagnosis. For instance, Chromosome 21 is known to be very important in the etiology of AD - for example, over half of those born with an extra copy of Chr21 (a condition known as Down’s Syndrome) will go on to develop Alzheimer’s Disease. However, the preliminary models using here suggested little promise of interesting results to be derived from considering gene expression data in isolation. Additionally, it was found the the samples from which the data is derived were taken from blood, not the central nervous system, which means that the gene expression profiles are not indicative of the cellular environment in the brain, as the gene expression profiles of different tissues varies hugely and the central nervous system is separated from the rest of the body by a near-impervious blood-brain-barrier. 
+Another area of exploration was using gene expression data to build a predictive model of diagnosis. For instance, Chromosome 21 is known to be very important in the etiology of AD - for example, over half of those born with an extra copy of Chr21 (a condition known as Down’s Syndrome) will go on to develop Alzheimer’s Disease. However, the preliminary models using here suggested little promise of interesting results to be derived from considering gene expression data in isolation. Additionally, it was found the the samples from which the data is derived were taken from blood, not the central nervous system, which means that the gene expression profiles are not indicative of the cellular environment in the brain, as the gene expression profiles of different tissues varies hugely and the central nervous system is separated from the rest of the body by a near-impervious blood-brain-barrier.
 
 Thus, our main focus is on developing a predictive model of a patient’s prognosis (i.e. evolution over time) given the information available at the patient's baseline visit (t=0) and using these models for identifying strong predictors. We therefore develop two separate models: one for individuals who begin as cognitively normal, one for those diagnosed at baseline as having mild cognitive impairment.
 
