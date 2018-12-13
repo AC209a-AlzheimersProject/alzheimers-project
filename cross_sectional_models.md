@@ -61,7 +61,8 @@ The one-versus-all logistic regression classifier achieves a training score of 8
 
 
 
-    (0.80623973727422, 0.7832512315270936)
+  
+  
 
 
 
@@ -92,7 +93,8 @@ The decision boundaries of this model are illustrated below (using jitter to ill
 
 
 
-    (0.9343185550082101, 0.9261083743842364)
+
+
 
 
 
