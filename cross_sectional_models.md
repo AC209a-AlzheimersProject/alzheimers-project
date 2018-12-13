@@ -102,6 +102,6 @@ The decision boundaries of this model are illustrated below (using jitter to ill
 ![png](cross_sectional_models_files/cross_sectional_models_15_0.png)
 
 
-## Summary:
+## Summary
 
 The two simple cross-sectional models reveal that cognitive assessment scores are able to account for much of the variability in patient diagnoses, perhaps in large part given the heavy reliance on these exams for the definition of the ADNI diagnosis classes. As a model designed to predict diagnosis involving these exams as predictors seemed of relatively little value, we instead focused on models designed to predict a patient’s prognosis (i.e. change over time) given the information available at baseline (t=0).
