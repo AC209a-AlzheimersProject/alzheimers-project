@@ -16,6 +16,7 @@ nav_include: 3
 
 
 
+
 # Longitudinal Model: From measurements at the first visit and the time till the last visit we predict disease progression at the last visit
 
 Disease progression is defined as worsening of diagnosis on the last visit compared to the the baseline diagnosis.
@@ -710,7 +711,6 @@ We can plot the logistic regression model by looking at the probabilit of diseas
 ## 2.2 Logistic model  taking into account all baseline measurements and time till last visit
 
 ### 2.2.1 Modelling Normal Baseline progression to MCI/AD with all baseline features and the time till last visit 
-- Balanced for the unequal classes
 
 
 
@@ -734,7 +734,8 @@ We can plot the logistic regression model by looking at the probabilit of diseas
 
 
 
-    Most important features are the ADAS (Alzheimers Disease Assessment Scale) results, patient educaiton and FAQ_bl (Functinoal Activities Questionnaire score at baseline).
+    Most important features are the ADAS (Alzheimers Disease Assessment Scale) results, 
+    patient education and FAQ_bl (Functinoal Activities Questionnaire score at baseline).
 
 
 
@@ -742,7 +743,6 @@ We can plot the logistic regression model by looking at the probabilit of diseas
 
 
 ### 2.2.2 Modelling MCI Baseline progression to AD with all baseline features and the time till last visit 
-- Balanced for the unequal classes
 
 
 
@@ -1855,12 +1855,7 @@ BOOST=GradientBoostingClassifier(random_state=1)
 
 
 
-#### 3.4.7. XGBoost
-
-Bases: xgboost.sklearn.XGBModel, object
-Implementation of the scikit-learn API for XGBoost classification.
-
-Tested parameters:
+**3.4.7. XGBoost**
 
 
 
@@ -1894,9 +1889,7 @@ XGB2 = XGBClassifier(random_state=1)
 
 
 
-#### 3.4.8 MLP
-
-Tested parameters:
+**3.4.8 MLP**
 
 
 
