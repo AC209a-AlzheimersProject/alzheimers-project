@@ -4,6 +4,18 @@ notebook: model_longitudinal.ipynb
 nav_include: 3
 ---
 
+## Contents
+{:.no_toc}
+*  
+{: toc}
+
+
+
+
+
+
+
+
 
 # Longitudinal Model: From measurements at the first visit and the time till the last visit we predict disease progression at the last visit
 
@@ -522,21 +534,6 @@ We are keeping only the last visit measurement since it contains all the measure
 
 
 
-```python
-# Reducing the dataset to the last visit for every individual:
-indexes_last_visit=[]
-for patient_ids in df.PTID.unique():
-  latest_visit_M=df[df.PTID==patient_ids]['M'].max()
-  d=df[ df.PTID==patient_ids ]['M']== latest_visit_M
-  ind=d.index[-1]
-  indexes_last_visit.append(ind);
-  
-# Only last visits
-df_last=df.loc[indexes_last_visit]
-
-print("Before we had ", len(df), " rows.")
-print("After we had  ", len(df_last), "  rows.")
-```
 
 
     Before we had  5059  rows.
@@ -645,7 +642,7 @@ If we don't balance for the unequal classes we end up in our very basic logistic
     
     Logistic Regresssion predicting desease progression from Normal Baseline to MCI or AD at last visit
     
-    Training accuracy: 	0.70 , 
+    Training accuracy: 	0.70 
     Test accuracy: 		0.70
     
 
@@ -669,7 +666,7 @@ The **balancing of the unequal size groups** by the parameter ```class_weight='b
     
     Logistic Regresssion predicting desease progression from MCI Baseline to AD at last visit
     
-    Training accuracy: 	0.58 , 
+    Training accuracy: 	0.58  
     Test accuracy: 		0.49
     
 
@@ -1510,9 +1507,6 @@ lgbm=LGBMClassifier(random_state=1)
 
 
 
-```python
-df[['1 KNN_mu', '2 LOGI_mu', '3 SVC_mu', '4 TREE_mu', '5 RF_mu',  '6 BOOST_mu', '7 XGB2_mu', '8 MLP_mu', '9 LGBM_mu']].round(2)
-```
 
 
 
