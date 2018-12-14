@@ -16,7 +16,6 @@ nav_include: 3
 
 
 
-
 # Longitudinal Model: From measurements at the first visit and the time till the last visit we predict disease progression at the last visit
 
 Disease progression is defined as worsening of diagnosis on the last visit compared to the the baseline diagnosis.
@@ -710,7 +709,7 @@ We can plot the logistic regression model by looking at the probabilit of diseas
 
 ## 2.2 Logistic model  taking into account all baseline measurements and time till last visit
 
-### 2.2.1 Modelling Normal Baseline patients progressing to MCI/AD taking into account all baseline measurements and time till last visit 
+### 2.2.1 Modelling Normal Baseline progression to MCI/AD with all baseline features and the time till last visit 
 - Balanced for the unequal classes
 
 
@@ -742,7 +741,7 @@ We can plot the logistic regression model by looking at the probabilit of diseas
 ![png](model_longitudinal_files/model_longitudinal_34_1.png)
 
 
-### 2.2.1 Modelling MCI Baseline patients progressing to AD taking into account all baseline measurements and time till last visit
+### 2.2.2 Modelling MCI Baseline progression to AD with all baseline features and the time till last visit 
 - Balanced for the unequal classes
 
 
@@ -979,7 +978,7 @@ After the for runs of cross validation and parameter optimization we see that ou
 ![png](model_longitudinal_files/model_longitudinal_50_0.png)
 
 
-### The actual Parameter Optimisation and 5-fold CV code:
+### The actual Parameter Optimisation and 4-fold CV code
 
 
 
@@ -1171,9 +1170,7 @@ LOGI_Accuracy,  LOGI_best_predictions_all,  LOGI_test_all , LOGI_time \
 
 ## 3.4 Model testing of KNN, Logistic Regression, Decision Tree Classifier, Random Forest, Gradient Boosting,  XGBoost, MLP and  Light-GBM for predicing Normal Baseline patients progressing to MCI/AD at last visit.
 
-**3.3.1 KNN**
-
-``` class sklearn.neighbors.KNeighborsClassifier(n_neighbors=5, weights='uniform', algorithm='auto', 
+**3.3.1 KNN:** ```class sklearn.neighbors.KNeighborsClassifier(n_neighbors=5, weights='uniform', algorithm='auto', 
  leaf_size=30, p=2, metric='minkowski', metric_params=None, n_jobs=1, **kwargs)````
 
 Tested parameters:
@@ -1210,10 +1207,7 @@ KNN = KNeighborsClassifier(weights='distance')
 
 
 
-**3.3.2 Logistic Regression**
-
-
-```class sklearn.linear_model.LogisticRegression(penalty=’l2’, dual=False, tol=0.0001,  C=1.0, fit_intercept=True, intercept_scaling=1, class_weight=None, random_state=None,  solver=’liblinear’, max_iter=100, multi_class=’ovr’, verbose=0, warm_start=False, n_jobs=1)```
+**3.3.2 Logistic Regression:** ```class sklearn.linear_model.LogisticRegression(penalty=’l2’, dual=False, tol=0.0001,  C=1.0, fit_intercept=True, intercept_scaling=1, class_weight=None, random_state=None,  solver=’liblinear’, max_iter=100, multi_class=’ovr’, verbose=0, warm_start=False, n_jobs=1)```
 
 Tested parameters: 
 
@@ -1244,10 +1238,7 @@ LOGI =LogisticRegression(random_state=1,max_iter=1000,tol=5e-4, solver='liblinea
 
 
 
-**3.3.3 SVM**
-
-
-``` class sklearn.svm.SVC(C=1.0, kernel=’rbf’, degree=3, gamma=’auto’, coef0=0.0, shrinking=True, probability=False, tol=0.001, cache_size=200, class_weight=None, verbose=False, max_iter=-1, decision_function_shape=’ovr’, random_state=None) ```
+**3.3.3 SVM:**``` class sklearn.svm.SVC(C=1.0, kernel=’rbf’, degree=3, gamma=’auto’, coef0=0.0, shrinking=True, probability=False, tol=0.001, cache_size=200, class_weight=None, verbose=False, max_iter=-1, decision_function_shape=’ovr’, random_state=None) ```
 
 Tested parameters: 
 
@@ -1285,9 +1276,7 @@ df = pd.DataFrame(data=d, index=Names)
 ```
 
 
-**3.3.4 Decision Tree**
-
-```class sklearn.tree.DecisionTreeClassifier(criterion=’gini’, splitter=’best’, max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features=None, random_state=None, max_leaf_nodes=None, min_impurity_decrease=0.0, min_impurity_split=None, class_weight=None, presort=False)```
+**3.3.4 Decision Tree:** ```class sklearn.tree.DecisionTreeClassifier(criterion=’gini’, splitter=’best’, max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, max_features=None, random_state=None, max_leaf_nodes=None, min_impurity_decrease=0.0, min_impurity_split=None, class_weight=None, presort=False)```
 
 Tested parameters: 
 
@@ -1318,9 +1307,7 @@ TREE = DecisionTreeClassifier(random_state=1)
 
 
 
-#### 3.3.5 Random Forest
-
-```class sklearn.ensemble.RandomForestClassifier(n_estimators=10->100, criterion='gini', 
+**3.3.5 Random Forest:** ```class sklearn.ensemble.RandomForestClassifier(n_estimators=10->100, criterion='gini', 
 max_depth=None, min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, 
 max_features='auto', max_leaf_nodes=None, min_impurity_split=1e-07, bootstrap=True, 
 oob_score=False, n_jobs=1, random_state=None, verbose=0, warm_start=False, class_weight=None)```
@@ -1357,8 +1344,7 @@ RF = RandomForestClassifier(random_state=1)
 
 
 
-#### 3.3.6 Gradient boosting
-``` class sklearn.ensemble.GradientBoostingClassifier(loss='deviance', learning_rate=0.1, n_estimators=100, subsample=1.0, criterion='friedman_mse', min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, 
+**3.3.6 Gradient boosting:** ``` class sklearn.ensemble.GradientBoostingClassifier(loss='deviance', learning_rate=0.1, n_estimators=100, subsample=1.0, criterion='friedman_mse', min_samples_split=2, min_samples_leaf=1, min_weight_fraction_leaf=0.0, 
  max_depth=3, min_impurity_split=1e-07, init=None, random_state=None, max_features=None, verbose=0, max_leaf_nodes=None, warm_start=False, presort='auto')```
 
 Tested parameters: 
@@ -1392,11 +1378,7 @@ BOOST=GradientBoostingClassifier(random_state=1)
 
 
 
-#### 3.3.7. XGBoost
- ``` class xgboost.XGBClassifier(max_depth=3, learning_rate=0.1, n_estimators=100, silent=True, objective='binary:logistic', booster='gbtree', n_jobs=1, nthread=None, gamma=0, min_child_weight=1, max_delta_step=0, subsample=1, colsample_bytree=1, colsample_bylevel=1, reg_alpha=0, reg_lambda=1, scale_pos_weight=1, base_score=0.5, random_state=0, seed=None, missing=None, **kwargs)```
-
-Bases: xgboost.sklearn.XGBModel, object
-Implementation of the scikit-learn API for XGBoost classification.
+**3.3.7. XGBoost:** ``` class xgboost.XGBClassifier(max_depth=3, learning_rate=0.1, n_estimators=100, silent=True, objective='binary:logistic', booster='gbtree', n_jobs=1, nthread=None, gamma=0, min_child_weight=1, max_delta_step=0, subsample=1, colsample_bytree=1, colsample_bylevel=1, reg_alpha=0, reg_lambda=1, scale_pos_weight=1, base_score=0.5, random_state=0, seed=None, missing=None, **kwargs)```
 
 Tested parameters: 
 
@@ -1432,9 +1414,7 @@ XGB2 = XGBClassifier(random_state=1)
 
 
 
-#### 3.3.8 MLP
-
-```class sklearn.neural_network.MLPClassifier(hidden_layer_sizes=(100, ), activation='relu', solver='adam', alpha=0.0001, batch_size='auto', learning_rate='constant', learning_rate_init=0.001, power_t=0.5, max_iter=200, shuffle=True, random_state=None, tol=0.0001, verbose=False, warm_start=False, momentum=0.9, nesterovs_momentum=True, early_stopping=False, validation_fraction=0.1, beta_1=0.9, beta_2=0.999, epsilon=1e-08)```
+**3.3.8 MLP:** ```class sklearn.neural_network.MLPClassifier(hidden_layer_sizes=(100, ), activation='relu', solver='adam', alpha=0.0001, batch_size='auto', learning_rate='constant', learning_rate_init=0.001, power_t=0.5, max_iter=200, shuffle=True, random_state=None, tol=0.0001, verbose=False, warm_start=False, momentum=0.9, nesterovs_momentum=True, early_stopping=False, validation_fraction=0.1, beta_1=0.9, beta_2=0.999, epsilon=1e-08)```
 
 Tested parameters:
 
@@ -1467,9 +1447,7 @@ MLP = MLPClassifier(random_state=1, max_iter=500,solver='adam')
 
 
 
-#### 3.3.9 LGBM
-
-```class lightgbm.Dataset(data, label=None, reference=None, weight=None, group=None, init_score=None, silent=False, feature_name='auto', categorical_feature='auto', params=None, free_raw_data=True)```
+**3.3.9 LGBM:** ```class lightgbm.Dataset(data, label=None, reference=None, weight=None, group=None, init_score=None, silent=False, feature_name='auto', categorical_feature='auto', params=None, free_raw_data=True)```
 
 Test parameters:
 - max_depth = 2, 3, 4, 5, 6, 7, 8, 9,10, 30
@@ -1688,9 +1666,7 @@ lgbm=LGBMClassifier(random_state=1)
 
 ## 3.4 Model testing of KNN, Logistic Regression, Decision Tree Classifier, Random Forest, Gradient Boosting,  XGBoost, MLP and  Light-GBM for predicing MCI Baseline patients progressing to AD at last visit.
 
-#### 3.4.1 KNN 
-
-Tested parameters:
+**3.4.1 KNN**
 
 
 
@@ -1723,9 +1699,7 @@ KNN = KNeighborsClassifier(weights='distance')
 
 
 
-#### 3.4.2 Logistic Regression
-
-Tested parameters: 
+**3.4.2 Logistic Regression**
 
 
 
@@ -1754,9 +1728,7 @@ LOGI =LogisticRegression(random_state=1,max_iter=1000,tol=5e-4, solver='liblinea
 
 
 
-#### 3.4.3 SVM
-
-Tested parameters:
+**3.4.3 SVM**
 
 
 
@@ -1792,9 +1764,7 @@ df = pd.DataFrame(data=d, index=Names)
 ```
 
 
-#### 3.4.4 Decision Tree
-
-Tested parameters:
+**3.4.4 Decision Tree**
 
 
 
@@ -1823,9 +1793,7 @@ TREE = DecisionTreeClassifier(random_state=1)
 
 
 
-#### 3.4.5 Random Forest
-
-Tested parameters:
+**3.4.5 Random Forest**
 
 
 
@@ -1856,9 +1824,7 @@ RF = RandomForestClassifier(random_state=1)
 
 
 
-#### 3.4.6 Gradient boosting
- 
-Tested parameters:
+**3.4.6 Gradient boosting**
 
 
 
@@ -1961,9 +1927,7 @@ MLP = MLPClassifier(random_state=1, max_iter=500,solver='adam')
 
 
 
-#### 3.4.9 LGBM
-
-Tested parameters:
+**3.4.9 LGBM**
 
 
 
